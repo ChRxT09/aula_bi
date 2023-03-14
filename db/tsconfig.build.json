@@ -1,0 +1,8 @@
+{
+  // Configura??o usada na hora do build
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false
+  },
+  "include": ["src"]
+}
