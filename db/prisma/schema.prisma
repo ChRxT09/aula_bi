@@ -11,7 +11,7 @@ datasource db {
 }
 
 model CovidTestsCsv {
-  id                                Int                    @id @default(autoincrement()) @map("id")
+  id                                Int                    @unique @id @default(autoincrement()) @map("id")
   notificationDate                  DateTime?              @db.Timestamptz() @map("notificacao_data")
   registerDate                      DateTime?              @db.Timestamptz() @map("cadastro_data")
   diagnosisDate                     DateTime?              @db.Timestamptz() @map("diagnostico_data")
@@ -49,13 +49,13 @@ model CovidTestsCsv {
   wasHospitalized                   Boolean?               @map("ficou_internado")
   internationalTrip                 String?                @db.VarChar(100) @map("viagem_internacional")
   nationalTrip                      String?                @db.VarChar(100) @map("viagem_brasil")
-  isHealthcare                      String?                @db.VarChar(100) @map("profissional_saude")
+  isHealthcare                      Boolean?               @map("profissional_saude")
   hasDisability                     String?                @db.VarChar(100) @map("possui_deficiencia")
   homeless                          String?                @db.VarChar(100) @map("morador_de_rua")
   rtPCRResult                       String?                @db.VarChar(100) @map("rt_pcr_resultado")
   quickTestResult                   String?                @db.VarChar(100) @map("teste_rapido_resultado")
   serologyResult                    String?                @db.VarChar(100) @map("sorologia_resultado")
   iggSerologyResult                 String?                @db.VarChar(100) @map("sorologia_igg_resultado")
-  quickTestType                     String?	              @db.VarChar(100) @map("tipo_teste_rapido")
+  quickTestType                     String?	                @db.VarChar(100) @map("tipo_teste_rapido")
   @@map("covid_testes")
 }
