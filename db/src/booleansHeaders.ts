@@ -14,5 +14,9 @@ export const booleanHeaders = [
 	"smokingComorbidity",
 	"obesityComorbidity",
 	"wasHospitalized",
-	'isHealthcare'
+	'isHealthcare',
+	'hasDisability',
+  'homeless',
+	'internationalTrip',
+	'nationalTrip'
 ];
