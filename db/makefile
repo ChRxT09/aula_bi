@@ -1,2 +1,2 @@
 magic:
-	psql -h localhost -p 5030 -U dev -d teste -c "\copy covid_testes FROM '../data/MICRODADOStratados.csv' delimiter ';' csv"
+	psql -h 127.0.0.1 -p 5432 -U postgres -d aula_bi -c "\copy covid_testes FROM '../data/MICRODADOStratados.csv' delimiter ';' csv"
