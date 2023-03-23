@@ -2,17 +2,7 @@
 
 primeiramente, baixe o arquivo `MICRODADOS.csv` no site
 do painel da COVID-19 [clicando aqui](https://coronavirus.es.gov.br/painel-covid-19-es) e, em seguida, copie e cole o
-arquivo na pasta `data` do projeto
-
-depois, execute o comando a seguir no terminal linux
-
-```bash
-cd /home/$USER/diretorio_do_projeto/
-make to_utf8
-```
-
-ele converterá o arquivo do encode `LATIN1` para `UTF-8`
-e o deixará no arquivo de nome `MICRODADOStratados.csv`.
+arquivo na pasta `data` do projeto.
 
 ## Preparando o banco
 
@@ -36,10 +26,9 @@ cd /home/$USER/diretorio_do_projeto/
 make import
 ```
 
-É possível que ocorra erros durante a execução do comando. uma solução
-não muito convencional, foi substituir ' D" ' por " D' " utilizando o
-Notepad++ (que foi o único editor de texto que testei e que
-foi capaz de abrir o arquivo)
+Esse comando converterá o arquivo do encode `LATIN1` para `UTF-8`
+e o deixará no arquivo de nome `MICRODADOStratados.csv`. Em seguida,
+começará a copiar os dados do csv para o banco de dados.
 
 ## Organização de diretórios
 
