@@ -21,3 +21,6 @@ query1:
 
 python_requirements:
 	-pip install requirements.txt -r
+
+star:
+	-python3 scripts/modelingData.py
