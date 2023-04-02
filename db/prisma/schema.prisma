@@ -56,6 +56,99 @@ model CovidTestsCsv {
   quickTestResult                   String?                @db.VarChar(100) @map("teste_rapido_resultado")
   serologyResult                    String?                @db.VarChar(100) @map("sorologia_resultado")
   iggSerologyResult                 String?                @db.VarChar(100) @map("sorologia_igg_resultado")
-  quickTestType                     String?	                @db.VarChar(100) @map("tipo_teste_rapido")
+  quickTestType                     String?	               @db.VarChar(100) @map("tipo_teste_rapido")
   @@map("covid_testes")
+}
+
+
+
+model Test {
+  id                     Int     @unique @id @default(autoincrement())
+  ageGroupId                        Int                    @map("dimensão_faixa_etaria")
+  socioeconomicId                   Int                    @map("dimensão_socioeconomica")
+  placeId                           Int                    @map("dimensão_lugar")
+  symptomsId                        Int                    @map("dimensão_sintomas")
+  comorbidityId                     Int                    @map("dimensão_comorbidade")
+  wasTravelingId                    Int                    @map("dimensão_viajando")
+  rtPCRResult                       String?                @db.VarChar(100) @map("rt_pcr_resultado")
+  quickTestResult                   String?                @db.VarChar(100) @map("teste_rapido_resultado")
+  serologyResult                    String?                @db.VarChar(100) @map("sorologia_resultado")
+  iggSerologyResult                 String?                @db.VarChar(100) @map("sorologia_igg_resultado")
+  quickTestType                     String?	               @db.VarChar(100) @map("tipo_teste_rapido")
+  notificationDate                  String?                @db.VarChar(100) @map("notificacao_data")
+  registerDate                      String?                @db.VarChar(100) @map("cadastro_data")
+  diagnosisDate                     String?                @db.VarChar(100) @map("diagnostico_data")
+  rtPCRColectDate                   String?                @db.VarChar(100) @map("coleta_rt_pcr_data")
+  quickTestCollectDate              String?                @db.VarChar(100) @map("coleta_teste_rapido_data")
+  serologyCollectDate               String?                @db.VarChar(100) @map("coleta_sorologia_data")
+  iggSerologyCollectDate            String?                @db.VarChar(100) @map("coleta_sorologia_igg_data")
+  closingDate                       String?                @db.VarChar(100) @map("encerramento_data")
+  deathDate                         String?                @db.VarChar(100) @map("obito_data")
+  rating                            String?                @db.VarChar(100) @map("classificacao")
+  evolution                         String?                @db.VarChar(100) @map("evolucao")
+  confirmationCriteria              String?                @db.VarChar(100) @map("confirmacao_criterio")
+  notificationStatus                String?                @db.VarChar(100) @map("status_notificacao")
+  ageGroup                          AgeGroup               @relation(fields:[ageGroupId], references:[id])
+  socioeconomic                     Socioeconomic          @relation(fields:[socioeconomicId], references:[id])
+  place                             Place                  @relation(fields:[placeId], references:[id])
+  symptoms                          Symptoms               @relation(fields:[symptomsId], references:[id])
+  comorbidity                       Comorbidity            @relation(fields:[comorbidityId], references:[id])
+  wasTraveling                      WasTraveling            @relation(fields:[wasTravelingId], references:[id])
+  @@map("testes")
+}
+
+model AgeGroup {
+  id                                Int                    @unique @id @default(autoincrement())
+  ageGroup                          String?                @db.VarChar(100) @map("faixa_etaria")
+  ageWhenNotified                   String?                @db.VarChar(100) @map("idade_data_notificacao")
+  tests Test[]
+  @@map("faixa_etaria")
+}
+
+model Socioeconomic {
+  id                                Int                    @unique @id @default(autoincrement())
+  homeless                          Boolean                @map("morador_de_rua")
+  isHealthcare                      Boolean                @map("profissional_saude")
+  gender                            Boolean                @map("sexo")
+  ColorRace                         Boolean                @map("raca_cor")
+  scholarity                        Boolean                @map("escolaridade")
+  tests Test[]
+  @@map("socioeconomico")
+}
+
+model Place {
+  id                                Int                   @unique @id @default(autoincrement())
+  county                            String                @db.VarChar(100) @map("municipio")
+  district                          String                @db.VarChar(100) @map("bairro")
+  tests Test[]
+  @@map("lugares")
+}
+model WasTraveling {
+  id                                Int                    @unique @id @default(autoincrement())
+  internationalTrip                 String?                @db.VarChar(100)@map("viagem_internacional")
+  nationalTrip                      String?                @db.VarChar(100)@map("viagem_brasil")
+  tests Test[]
+}
+model Symptoms {
+  id                                Int                    @unique @id @default(autoincrement())
+  fever                             Boolean                @map("febre")
+  hardBreath                        Boolean                @map("dificuldade_respiratoria")
+  cough                             Boolean                @map("tosse")
+  runnyNose                         Boolean                @map("coriza")
+  soreThroat                        Boolean                @map("dor_garganta")
+  diarrhea                          Boolean                @map("diarreia")
+  headache                          Boolean                @map("cefaleia")
+  tests Test[]
+  @@map("sintomas")
+}
+model Comorbidity {
+  id                                Int                    @unique @id @default(autoincrement())
+  lungsComorbidity                  Boolean                @map("pulmao_comorbidade")
+  cardioComorbidity                 Boolean                @map("cardio_comorbidade")
+  kidneyComorbidity                 Boolean                @map("rins_comorbidade")
+  diabetesComorbidity               Boolean                @map("diabetes_comorbidade")
+  smokingComorbidity                Boolean                @map("tabagismo_comorbidade")
+  obesityComorbidity                Boolean                @map("obesidade_comorbidade") 
+  tests Test[]
+  @@map("comorbidades")
 }
