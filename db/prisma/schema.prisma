@@ -85,13 +85,13 @@ model Death {
 
 }
 
-model Time {
+model Time {// ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
   deathDate                         DateTime?              @map("obito_data")
   deaths                            Death[]
   @@map("tempo")
 }
-model Place {
+model Place { // ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
   county                            String?                @db.VarChar(100) @map("municipio")
   district                          String?                @db.VarChar(100) @map("bairro")
@@ -99,7 +99,7 @@ model Place {
   @@map("lugar")
 }
 
-model Symptoms {
+model Symptoms { //ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
   fever                             Boolean?               @map("febre")
   hardBreath                        Boolean?               @map("dificuldade_respiratoria")
@@ -112,7 +112,7 @@ model Symptoms {
   @@map("sintoma")
 }
 
-model Comorbidity {
+model Comorbidity { // ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
   lungsComorbidity                  Boolean?               @map("pulmao_comorbidade")
   cardioComorbidity                 Boolean?               @map("cardio_comorbidade")
@@ -125,19 +125,16 @@ model Comorbidity {
 }
 
 
-model TestResult { 
+model TestResult { //ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
-  rtPCRResult                       String?                @db.VarChar(100) @map("rt_pcr_resultado")
-  quickTestResult                   String?                @db.VarChar(100) @map("teste_rapido_resultado")
-  serologyResult                    String?                @db.VarChar(100) @map("sorologia_resultado")
-  iggSerologyResult                 String?                @db.VarChar(100) @map("sorologia_igg_resultado")
+  result                            String?                @db.VarChar(20) @map("resultado")
   deaths                            Death[]
   @@map("resultado_teste")
 }
 
-model Person {
+model Person { //ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
-  ageWhenNotified                   Int?                    @map("idade_ano")
+  ageWhenNotified                   Int?                   @map("idade_ano")
   gender                            String?                @db.VarChar(1) @map("sexo")
   ColorRace                         String?                @db.VarChar(20) @map("raca_cor")
   scholarity                        String?                @db.VarChar(100) @map("escolaridade")
@@ -149,16 +146,17 @@ model Person {
   @@map("pessoa")
 }
 
-model WasHospitalized {
+model WasHospitalized { //ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
   wasHospitalized                   Boolean?               @map("ficou_internado")
   deaths                            Death[]
   @@map("hospitalizado")
 }
 
-model WasTraveling {
+model WasTraveling { //ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
   internationalTrip                 Boolean?               @map("viagem_internacional")
   nationalTrip                      Boolean?               @map("viagem_brasil")
   deaths                            Death[]
+  @@map("estava_viajando")
 }
