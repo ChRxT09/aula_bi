@@ -64,15 +64,15 @@ model CovidTestsCsv {
 
 model Death {
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
-  died                              Boolean?                @map("morreu")
-  timeId                            Int?                    @map("dimensao_tempo")
-  placeId                           Int?                    @map("dimensao_lugar")
-  symptomsId                        Int?                    @map("dimensao_sintoma")
-  ComorbidityId                     Int?                    @map("dimensao_comorbidade")
-  testResultId                      Int?                    @map("dimensao_resultado_teste")
-  personId                          Int?                    @map("dimensao_pessoa")
-  wasHospitalizedId                 Int?                    @map("dimensao_hospitalizado")
-  WasTravelingId                    Int?                    @map("dimensao_viajou")
+  died                              Boolean?               @map("morreu")
+  timeId                            Int?                   @map("dimensao_tempo")
+  placeId                           Int?                   @map("dimensao_lugar")
+  symptomsId                        Int?                   @map("dimensao_sintoma")
+  ComorbidityId                     Int?                   @map("dimensao_comorbidade")
+  testResultId                      Int?                   @map("dimensao_resultado_teste")
+  personId                          Int?                   @map("dimensao_pessoa")
+  wasHospitalizedId                 Int?                   @map("dimensao_hospitalizado")
+  WasTravelingId                    Int?                   @map("dimensao_viajou")
   time                              Time?                  @relation(fields: [timeId], references: [id])
   place                             Place?                 @relation(fields: [placeId], references: [id])
   symptoms                          Symptoms?              @relation(fields: [symptomsId], references: [id])
@@ -127,6 +127,8 @@ model Comorbidity { // ok
 
 model TestResult { //ok
   id                                Int                    @unique @id @default(autoincrement()) @map("id")
+  confirmationCriteria              String?                @db.VarChar(21) @map("confirmacao_criterio")
+  rating                            String?                @db.VarChar(32) @map("classificacao")
   result                            String?                @db.VarChar(20) @map("resultado")
   deaths                            Death[]
   @@map("resultado_teste")
