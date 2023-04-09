@@ -18,9 +18,6 @@ to_utf8:
 	-iconv -f iso-8859-1 -t utf-8 data/MICRODADOS.csv > data/MICRODADOStratados.csv
 	-sed -i "s/\"/d'/g" ./data/MICRODADOStratados.csv
 
-query1:
-	-python3 ./scripts/query1.py
-
 python_requirements:
 	-pip install -r requirements.txt
 
@@ -34,3 +31,6 @@ etl:
 	-make to_utf8
 	-make import
 	-make star
+
+query1:
+	-python3 ./scripts/query1.py
