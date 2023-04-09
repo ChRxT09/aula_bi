@@ -1,7 +1,7 @@
 import psycopg2
 from time import sleep
 
-conn = psycopg2.connect("dbname=notas user=dev password=dev host=localhost port=5030")
+conn = psycopg2.connect("dbname=teste user=dev password=dev host=localhost port=5030")
 cur = conn.cursor()
 
 def commit(text):
@@ -190,28 +190,42 @@ commit('estavam viajando inseridos')
 
 
 print('inserindo resultados')
-cur.execute('''
-INSERT INTO resultado_teste 
-	SELECT
-		id,
-		CASE 
-			WHEN sorologia_igg_resultado = 'Reagente'
-				OR sorologia_resultado = 'Reagente'
-				OR rt_pcr_resultado = 'Positivo'
-				OR teste_rapido_resultado = 'Positivo' 
-			THEN 'Positivo'
-			ELSE
-				CASE 
-					WHEN sorologia_igg_resultado = 'Não Reagente'
-						OR sorologia_resultado = 'Não Reagente'
-						OR rt_pcr_resultado = 'Negativo'
-						OR teste_rapido_resultado = 'Negativo' 
-					THEN 'Negativo'
-					ELSE 'Inconclusivo'
-				END 
-		END 
-		AS resultado
-	FROM covid_testes;
+cur.execute(''' INSERT INTO resultado_teste 
+									SELECT
+										id,
+										CASE 
+											WHEN sorologia_igg_resultado = 'Reagente'
+												OR sorologia_resultado = 'Reagente'
+												OR rt_pcr_resultado = 'Positivo'
+												OR teste_rapido_resultado = 'Positivo' 
+											THEN 'Positivo'
+											ELSE
+												CASE 
+													WHEN sorologia_igg_resultado = 'Não Reagente'
+														OR sorologia_resultado = 'Não Reagente'
+														OR rt_pcr_resultado = 'Negativo'
+														OR teste_rapido_resultado = 'Negativo'
+													THEN 'Negativo'
+													ELSE
+														CASE 
+															WHEN sorologia_igg_resultado = 'Inconclusivo'
+																OR sorologia_resultado = 'Inconclusivo'
+																OR rt_pcr_resultado = 'Inconclusivo'
+																OR teste_rapido_resultado = 'Inconclusivo' 
+															THEN 'Inconclusivo'
+															ELSE 'Não Informado'
+														END 
+												END
+										END
+										AS resultado,
+										classificacao,
+										CASE 
+											WHEN confirmacao_criterio = '-' 
+											THEN NULL
+											ELSE confirmacao_criterio
+										END
+										AS confirmacao_criterio 
+									FROM covid_testes ct
 ''')
 
 commit('resultados concluidos')
